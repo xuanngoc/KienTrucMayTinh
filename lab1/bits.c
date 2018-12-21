@@ -144,7 +144,9 @@ int bitXor(int x, int y) {
  *   Rating: 1
  */
 int thirdBits(void) {
-  return 2;
+  int bits9 = 0x49;
+  int bits18 = bits9 | (bits9<<9);
+  return bits18 | (bits18<<18); 
 }
 // Rating: 2
 /* 
@@ -157,7 +159,9 @@ int thirdBits(void) {
  *   Rating: 2
  */
 int fitsBits(int x, int n) {
-  return 2;
+  int shift = 33 + ~n;
+  return !(x ^ ((x << shift) >> shift));
+  
 }
 /* 
  * sign - return 1 if positive, 0 if zero, and -1 if negative
@@ -168,7 +172,9 @@ int fitsBits(int x, int n) {
  *  Rating: 2
  */
 int sign(int x) {
-    return 2;
+  int s = x >> 31;
+  s = s<<1;
+  return (s|(!!x));
 }
 /* 
  * getByte - Extract byte n from int x
@@ -206,7 +212,7 @@ int addOK(int x, int y) {
 }
 /* invert - Return x with the n bits that begin at position p inverted 
  *          (i.e., turn 0 into 1 and vice versa) and the rest left 
- *          unchanged. Consider the indices of x to begin with the low-order
+ *          unchanged. Consider the indices of x to begin with íthe low-order
  *          bit numbered as 0.
  *   Can assume that 0 <= n <= 31 and 0 <= p <= 31
  *   Example: invert(0x80000000, 0, 1) = 0x80000001,
@@ -227,7 +233,9 @@ int invert(int x, int p, int n) {
  *   Rating: 4 
  */
 int bang(int x) {
-  return 2;
+  int r = ~x;
+  r = r>>31;
+  return ~x;
 }
 // Extra Credit: Rating: 3
 /* 
@@ -250,5 +258,5 @@ int conditional(int x, int y, int z) {
  *   Rating: 4
  */
 int isPower2(int x) {
-  return 2;
+  return x > 0 && (x & (x - 1 )) == 0 ;
 }
